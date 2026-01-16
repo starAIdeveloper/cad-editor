@@ -1,4 +1,5 @@
 import {
+  BuildingNode,
   emitter,
   EventSuffix,
   ItemEvent,
@@ -7,10 +8,12 @@ import {
   WallNode,
 } from "@pascal-app/core";
 import { ThreeEvent } from "@react-three/fiber";
+import { BuildingEvent } from "../../../core/src/events/bus";
 
 type NodeConfig = {
   item: { node: ItemNode; event: ItemEvent };
   wall: { node: WallNode; event: WallEvent };
+  building: { node: BuildingNode; event: BuildingEvent };
 };
 
 type NodeType = keyof NodeConfig;
