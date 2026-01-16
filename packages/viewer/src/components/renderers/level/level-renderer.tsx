@@ -9,10 +9,10 @@ export const LevelRenderer = ({ node }: { node: LevelNode }) => {
   useRegistry(node.id, node.type, ref);
   return (
     <group ref={ref}>
-      <mesh receiveShadow>
+      {/* <mesh receiveShadow>
         <boxGeometry args={[10, 0.1, 10]} />
         <meshStandardMaterial color="orange" />
-      </mesh>
+      </mesh> */}
       {node.children.map((childId) => (
         <NodeRenderer key={childId} nodeId={childId} />
       ))}
