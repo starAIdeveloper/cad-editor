@@ -13,8 +13,8 @@ export function SlabPanel() {
   const setSelection = useViewer((s) => s.setSelection)
   const nodes = useScene((s) => s.nodes)
   const updateNode = useScene((s) => s.updateNode)
-  const editingHoleIndex = useEditor((s) => s.editingSlabHoleIndex)
-  const setEditingHoleIndex = useEditor((s) => s.setEditingSlabHoleIndex)
+  const editingHole = useEditor((s) => s.editingHole)
+  const setEditingHole = useEditor((s) => s.setEditingHole)
 
   // Get the first selected node if it's a slab
   const selectedId = selectedIds[0]
@@ -32,25 +32,25 @@ export function SlabPanel() {
 
   const handleClose = useCallback(() => {
     setSelection({ selectedIds: [] })
-    setEditingHoleIndex(null)
-  }, [setSelection, setEditingHoleIndex])
+    setEditingHole(null)
+  }, [setSelection, setEditingHole])
 
   // Clear hole editing state when slab is deselected
   useEffect(() => {
     if (!node) {
-      setEditingHoleIndex(null)
+      setEditingHole(null)
     }
-  }, [node, setEditingHoleIndex])
+  }, [node, setEditingHole])
 
   // Clear hole editing state on unmount
   useEffect(() => {
     return () => {
-      setEditingHoleIndex(null)
+      setEditingHole(null)
     }
-  }, [setEditingHoleIndex])
+  }, [setEditingHole])
 
   const handleAddHole = useCallback(() => {
-    if (!node) return
+    if (!node || !selectedId) return
 
     // Calculate centroid of the slab polygon
     const polygon = node.polygon
@@ -74,26 +74,28 @@ export function SlabPanel() {
     const currentHoles = node?.holes || []
     handleUpdate({ holes: [...currentHoles, newHole] })
     // Enter edit mode for the new hole
-    setEditingHoleIndex(currentHoles.length)
-  }, [node, handleUpdate, setEditingHoleIndex])
+    setEditingHole({ nodeId: selectedId, holeIndex: currentHoles.length })
+  }, [node, selectedId, handleUpdate, setEditingHole])
 
   const handleEditHole = useCallback(
     (index: number) => {
-      setEditingHoleIndex(index)
+      if (!selectedId) return
+      setEditingHole({ nodeId: selectedId, holeIndex: index })
     },
-    [setEditingHoleIndex],
+    [selectedId, setEditingHole],
   )
 
   const handleDeleteHole = useCallback(
     (index: number) => {
+      if (!selectedId) return
       const currentHoles = node?.holes || []
       const newHoles = currentHoles.filter((_, i) => i !== index)
       handleUpdate({ holes: newHoles })
-      if (editingHoleIndex === index) {
-        setEditingHoleIndex(null)
+      if (editingHole?.nodeId === selectedId && editingHole?.holeIndex === index) {
+        setEditingHole(null)
       }
     },
-    [node?.holes, handleUpdate, editingHoleIndex, setEditingHoleIndex],
+    [selectedId, node?.holes, handleUpdate, editingHole, setEditingHole],
   )
 
   // Only show if exactly one slab is selected
@@ -211,11 +213,11 @@ export function SlabPanel() {
               <label className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
                 Holes
               </label>
-              {editingHoleIndex !== null ? (
+              {editingHole?.nodeId === selectedId ? (
                 <button
                   type="button"
                   className="flex items-center gap-1 rounded border border-green-500 bg-green-500/10 px-2 py-1 text-xs text-green-600 hover:bg-green-500/20 cursor-pointer"
-                  onClick={() => setEditingHoleIndex(null)}
+                  onClick={() => setEditingHole(null)}
                 >
                   <span>Done Editing</span>
                 </button>
@@ -234,7 +236,7 @@ export function SlabPanel() {
               <div className="space-y-2">
                 {node.holes.map((hole, index) => {
                   const holeArea = calculateArea(hole)
-                  const isEditing = editingHoleIndex === index
+                  const isEditing = editingHole?.nodeId === selectedId && editingHole?.holeIndex === index
                   return (
                     <div
                       key={index}
