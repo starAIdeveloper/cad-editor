@@ -1,4 +1,4 @@
-import { getScaledDimensions, type AnyNodeId, type ItemNode, useScene, type WallNode, type WindowNode } from '@pascal-app/core'
+import { type AnyNodeId, type DoorNode, getScaledDimensions, type ItemNode, useScene, type WallNode, type WindowNode } from '@pascal-app/core'
 
 /**
  * Converts wall-local (X along wall, Y = height above wall base) to world XYZ.
@@ -90,6 +90,12 @@ export function hasWallChildOverlap(
       childRight = win.position[0] + win.width / 2
       childBottom = win.position[1] - win.height / 2  // windows store center Y
       childTop = win.position[1] + win.height / 2
+    } else if (child.type === 'door') {
+      const door = child as DoorNode
+      childLeft = door.position[0] - door.width / 2
+      childRight = door.position[0] + door.width / 2
+      childBottom = door.position[1] - door.height / 2  // doors store center Y
+      childTop = door.position[1] + door.height / 2
     } else {
       continue
     }
