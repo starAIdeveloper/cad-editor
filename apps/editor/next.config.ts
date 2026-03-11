@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['three', '@pascal-app/viewer', '@pascal-app/core'],
+  transpilePackages: ['three', '@pascal-app/viewer', '@pascal-app/core', '@pascal-app/editor'],
   experimental: {
     serverActions: {
       bodySizeLimit: '100mb',
