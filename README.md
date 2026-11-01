@@ -3,6 +3,8 @@
 An open-source, local-first 3D building editor built with React Three Fiber and
 WebGPU. Run it in the browser or from the CLI, and connect AI agents through MCP.
 
+![House modeling concept with a selected facade, transform controls and object hierarchy](docs/media/cad-reference/cad-1.png)
+
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![npm @pascal-app/core](https://img.shields.io/npm/v/@pascal-app/core?label=%40pascal-app%2Fcore)](https://www.npmjs.com/package/@pascal-app/core)
 [![npm @pascal-app/viewer](https://img.shields.io/npm/v/@pascal-app/viewer?label=%40pascal-app%2Fviewer)](https://www.npmjs.com/package/@pascal-app/viewer)
@@ -15,10 +17,6 @@ https://github.com/user-attachments/assets/8b50e7cf-cebe-4579-9cf3-8786b35f7b6b
 ## Architectural design reference gallery
 
 Three user-supplied CAD interface concepts. These are visual references, not verified screenshots of this repository's running editor.
-
-### Two-storey house exterior
-
-![House modeling concept with a selected facade, transform controls and object hierarchy](docs/media/cad-reference/cad-1.png)
 
 ### Floor plan and volume editing
 
