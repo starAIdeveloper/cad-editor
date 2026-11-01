@@ -12,6 +12,22 @@ WebGPU. Run it in the browser or from the CLI, and connect AI agents through MCP
 
 https://github.com/user-attachments/assets/8b50e7cf-cebe-4579-9cf3-8786b35f7b6b
 
+## Architectural design reference gallery
+
+Three user-supplied CAD interface concepts. These are visual references, not verified screenshots of this repository's running editor.
+
+### Two-storey house exterior
+
+![House modeling concept with a selected facade, transform controls and object hierarchy](docs/media/cad-reference/cad-1.png)
+
+### Floor plan and volume editing
+
+![Floor-plan modeling concept with interior partitions and a selected extruded volume](docs/media/cad-reference/cad-2.png)
+
+### Modern house and dimensions
+
+![Modern house concept with terraces, selected building geometry and dimension guides](docs/media/cad-reference/cad-3.png)
+
 ## A first look at Pascal Next
 
 [Explore the live demo](https://editor.pascal.app/next) — a real home reconstructed
